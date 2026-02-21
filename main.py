@@ -3,7 +3,7 @@ import random
 import sys
 import math
 
-# --- Setup & Theme ---
+# theme fo gui
 pygame.init()
 WIDTH, HEIGHT = 900, 600
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
@@ -11,7 +11,7 @@ display_surface = pygame.Surface((WIDTH, HEIGHT))
 pygame.display.set_caption("Aura Roulette: Definitive Edition")
 clock = pygame.time.Clock()
 
-# Colors
+# Colors for DIDIY 
 BG_COLOR    = (10, 10, 12)
 CARD_COLOR  = (25, 25, 30)
 ACCENT_GOLD = (255, 215, 0)
@@ -20,12 +20,12 @@ TEXT_WHITE  = (240, 240, 240)
 GRAY        = (60, 60, 70)
 FLASH_COLOR = (255, 255, 255)
 
-# Fonts
+# Fonts by pygame library
 TITLE_FONT = pygame.font.SysFont("Verdana", 48, bold=True)
 MAIN_FONT  = pygame.font.SysFont("Verdana", 24, bold=True)
 UI_FONT    = pygame.font.SysFont("Verdana", 18)
 
-# --- Game Logic Variables ---
+# logic variables
 players = []
 input_text = ""
 game_log = "Add 2+ players to start."
@@ -61,7 +61,7 @@ def draw_revolver(surf, x, y, angle):
         pygame.draw.circle(surf, BG_COLOR, (int(cx), int(cy)), 18)
         pygame.draw.circle(surf, ACCENT_GOLD, (int(cx), int(cy)), 18, 2)
 
-# --- Main Loop ---
+# MAIN FUCTION
 running = True
 while running:
     display_surface.fill(BG_COLOR)
@@ -70,7 +70,7 @@ while running:
         if event.type == pygame.QUIT:
             running = False
         
-        # --- IMPROVED TEXT INPUT LOGIC ---
+        # DIDDY MAKE THIS
         if not is_spinning and not winner_declared:
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_RETURN:
@@ -85,12 +85,12 @@ while running:
                 elif event.key == pygame.K_BACKSPACE:
                     input_text = input_text[:-1]
 
-            # Use TEXTINPUT for the actual letters (much more reliable)
+            # text inout (FUCK PYTORCH)
             elif event.type == pygame.TEXTINPUT:
                 if len(input_text) < 12:
                     input_text += event.text
 
-        # --- MOUSE CLICKS ---
+        # CLCIK
         if event.type == pygame.MOUSEBUTTONDOWN:
             trigger_rect = pygame.Rect(350, 480, 500, 60)
             if trigger_rect.collidepoint(event.pos):
@@ -105,7 +105,7 @@ while running:
                     is_spinning = True
                     spin_timer = pygame.time.get_ticks()
 
-    # --- Animation & Game Logic ---
+    # ANIMATION
     if is_spinning:
         spin_angle += 25
         game_log = "HOLD YOUR BREATH..."
@@ -132,7 +132,7 @@ while running:
                 game_log = f"👑 {players[0]['name']} IS THE AURA KING!"
                 winner_declared = True
 
-    # --- Drawing Layout ---
+    # LAYOUT
     # Sidebar: Squad List
     pygame.draw.rect(display_surface, CARD_COLOR, (30, 80, 280, 480), border_radius=15)
     draw_text(display_surface, "THE SQUAD", MAIN_FONT, ACCENT_GOLD, 50, 100)
@@ -155,14 +155,14 @@ while running:
     log_color = ACCENT_RED if "ELIMINATED" in game_log else ACCENT_GOLD
     draw_text(display_surface, game_log, UI_FONT, log_color, WIDTH//2 + 100, 370, center=True)
     
-    # Trigger/Reset Button
+    # RESET 
     if winner_declared:
         draw_button(display_surface, "NEW GAME", 350, 480, 500, 60, True)
     else:
         btn_active = len(players) >= 2 and not is_spinning
         draw_button(display_surface, "PULL TRIGGER", 350, 480, 500, 60, btn_active)
 
-    # --- Post-Processing (Shake & Flash) ---
+    # SHake and flash in the end
     render_offset = [0, 0]
     if shake_intensity > 0:
         render_offset = [random.randint(-shake_intensity, shake_intensity), 
@@ -176,7 +176,7 @@ while running:
         display_surface.blit(flash_surf, (0, 0))
         flash_timer -= 1
 
-    # Final Flip
+    # Final diddy Flip
     screen.fill((0, 0, 0))
     screen.blit(display_surface, render_offset)
     pygame.display.flip()
